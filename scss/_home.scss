@@ -1,0 +1,45 @@
+#home {
+  .intro {
+    display: flex;
+    justify-content: center;
+    h2 {
+      text-align: center;
+    }
+  }
+
+  .form-intro{
+    display: flex;
+    justify-content: center;
+  }
+
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .form {
+      display: flex;
+      justify-content: center;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        input {
+          margin: 20px 0;
+        }
+      }
+    }
+    .form-error {
+      .error-message {
+        color: red;
+      }
+    }
+    .form-success {
+      .success-message {
+        color: blue;
+      }
+    }
+
+  }
+
+}
