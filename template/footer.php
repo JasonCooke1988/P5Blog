@@ -34,7 +34,7 @@ use App\Helper\Template;
                         </a>
                     </li>
                 </ul>
-                <p><a href="<?= $url ?>/admin">Page administration</a></p>
+                <p><a href="<?= Template::getBasePath() ?>/admin">Page administration</a></p>
                 <p class="copyright text-muted">Copyright &copy; Your Website <?= date('Y')?></p>
             </div>
         </div>
