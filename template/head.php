@@ -46,7 +46,7 @@ $url = $container->get('base.path');
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="<?= $url ?>/index.php">P5 Blog - Jason Cooke</a>
+        <a class="navbar-brand" href="<?= Template::getBasePath() ?>/index.php">P5 Blog - Jason Cooke</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -56,13 +56,13 @@ $url = $container->get('base.path');
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= $url ?>/index.php">Home</a>
+                    <a class="nav-link" href="<?= Template::getBasePath() ?>/index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= $url ?>/post-archive">Le Blog</a>
+                    <a class="nav-link" href="<?= Template::getBasePath() ?>/post-archive">Le Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= $url ?>/login">Connexion utilisateur</a>
+                    <a class="nav-link" href="<?= Template::getBasePath() ?>/login">Connexion utilisateur</a>
                 </li>
             </ul>
         </div>

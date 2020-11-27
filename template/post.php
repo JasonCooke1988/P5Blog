@@ -18,7 +18,7 @@ require_once('head.php');
 
                 <?php if (isset($_SESSION['auth']) && $_SESSION['auth']): ?>
                 <p>Rédiger un commentaire :</p>
-                <form action="<?= $url ?>/create-comment" id="create-comment" method="post">
+                <form action="<?= Template::getBasePath() ?>/create-comment" id="create-comment" method="post">
                     <input type="hidden" id="postId" name="postId" value="<?= $post->getId() ?>">
                     <textarea name="commentContent" id="commentContent" placeholder="Rédiger un commentaire..."></textarea>
                     <input type="submit" value="Envoi">
