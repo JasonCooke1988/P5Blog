@@ -9,15 +9,16 @@ use App\Core\Container;
 use App\Core\Page;
 use App\Core\Response;
 use App\Manager\PostManager;
+use App\Service\Session;
 
 class AdminController extends AbstractController
 {
 
     public function index(): Response
     {
-
-        if (!isset($_SESSION['auth']) && !isset($_SESSION['admin'])) {
-
+        $container = Container::getInstance();
+        $session =  $container->get(Session::class);
+        if (!$session->isAuth() || !$session->isAdmin()) {
             $page = (new Page('unauthorized'))->generateContent();
         } else {
             $page = (new Page('admin-page'))->generateContent();
@@ -27,15 +28,16 @@ class AdminController extends AbstractController
 
     public function createPost(): Response
     {
-        if (!isset($_SESSION['auth']) && !isset($_SESSION['admin'])) {
+        $container = Container::getInstance();
+        $session =  $container->get(Session::class);
+        if (!$session->isauth() && !$session->isAdmin()) {
             $page = (new Page('unauthorized'))->generateContent();
         } else {
             if ($this->request->getMethod() === "POST") {
-                $container = Container::getInstance();
                 $postManager = $container->get(PostManager::class);
                 $data = $this->checkPost();
-                $data['email'] = $_SESSION['email'];
-                $data['userId'] = $_SESSION['id'];
+                $data['email'] = $session->getAttribute('email');
+                $data['userId'] = $session->getAttribute('id');
                 $postManager->create($data);
 
                 $page = (new Page('create-post',['formSuccess' => 'Votre post à bien été ajouté à la base de donnnées.']))->generateContent();

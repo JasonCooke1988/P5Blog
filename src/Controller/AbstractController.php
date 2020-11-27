@@ -73,7 +73,11 @@ abstract class AbstractController
                     $formError = $this->messageError;
                 }
             } else {
-                $data[$key] = $this->cleanPost($_POST[$key]);
+                if ($key !== "password" && $key !== "password2") {
+                    $data[$key] = $this->cleanPost($_POST[$key]);
+                } else {
+                    $data[$key] = $_POST[$key];
+                }
             }
         }
 

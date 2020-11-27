@@ -22,23 +22,18 @@ class UserManager extends Manager
 
     public function create($data)
     {
-        $sql = "INSERT INTO user (email,password,firstName,lastName,active,createdAt) VALUES (:email,:password,:fname,:lname,1,now());";
+        $sql = "INSERT INTO user (email,password,firstName,lastName,createdAt) VALUES (:email,:password,:fname,:lname,now());";
         $query = $this->pdo->prepare($sql);
         $query->bindValue(':email', $data['email']);
         $query->bindValue(':fname', $data['fname']);
         $query->bindValue(':lname', $data['lname']);
         $query->bindValue(':password', password_hash($data['password'], PASSWORD_DEFAULT));
-
         $query->execute();
-
-        $sql = "SELECT LAST_INSERT_ID();";
-        $query = $this->pdo->query($sql);
-        return $query->fetchColumn();
     }
 
     public function login($data)
     {
-        $sql = "SELECT user.firstName, user.lastName, user.email, user.password FROM user
+        $sql = "SELECT user.firstName, user.lastName, user.email, user.password, user.id FROM user
                 WHERE user.email = :email";
 
         $query = $this->pdo->prepare($sql);
@@ -66,11 +61,25 @@ class UserManager extends Manager
 
         $roles = $query->fetch();
 
-        if ($roles === null || !in_array('admin',explode(';',$roles['roles']))) {
-            return false;
-        }
+        return $roles['roles'];
+    }
 
-        return true;
+    public function setAdmin($email)
+    {
+        $sql = "UPDATE user SET roles = 1 WHERE email = :email";
+
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':email',$email);
+        $query->execute();
+    }
+
+    public function getAll()
+    {
+        $sql = "SELECT * FROM user";
+
+        $query = $this->pdo->query($sql);
+        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, User::class);
+        return $query->fetchAll();
     }
 
 }
