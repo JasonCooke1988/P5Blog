@@ -7,6 +7,7 @@ use App\Core\Page;
 use App\Core\Response;
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
+use App\Service\Session;
 use Exception;
 
 
@@ -27,7 +28,7 @@ class HomeController extends AbstractController
         return new Response($page);
     }
 
-    public function singlePost(string $id): Response
+    public function singlePost(string $id, string $formSuccess = ""): Response
     {
 
         $container = Container::getInstance();
@@ -37,7 +38,7 @@ class HomeController extends AbstractController
         $comments = $commentManager->getAll($id);
         $post = $postManager->getOne($id,$comments);
 
-        $page = (new Page('post', ['post' => $post]))->generateContent();
+        $page = (new Page('post', ['formSuccess' => $formSuccess,'post' => $post]))->generateContent();
 
         return new Response($page);
     }
@@ -91,7 +92,7 @@ class HomeController extends AbstractController
 
     }
 
-    public function createComment()
+    public function createComment(): Response
     {
         if ($this->request->getMethod() === "POST") {
 
@@ -102,13 +103,15 @@ class HomeController extends AbstractController
                 return new Response($page);
 
             } else {
-                $data['userId'] = $_SESSION['id'];
                 $container = Container::getInstance();
                 $commentManager = $container->get(CommentManager::class);
+                $postManager = $container->get(PostManager::class);
+                $session = $container->get(Session::class);
+
+                $data['userId'] = $session->getAttribute('id');
                 $commentManager->create($data);
 
-                $page = (new Page('post', ['formSuccess' => 'Votre commentaire viens d\'etre soumis et sera traité par l\'admin']))->generateContent();
-                return new Response($page);
+                return $this->singlePost($_POST['postId'],"Votre commentaire viens d'etre soumis et sera traité par un administrateur");
             }
         }
     }

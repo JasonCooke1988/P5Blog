@@ -45,5 +45,15 @@ class Session extends User
     {
         $this->user = $user;
     }
+
+    public function isAuth()
+    {
+        return isset($_SESSION['auth']);
+    }
+
+    public function isAdmin()
+    {
+        return isset($_SESSION['admin']);
+    }
     
 }

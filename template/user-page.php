@@ -6,7 +6,6 @@ require_once('head.php');
 <div id="home" class="container">
 
     <div class="row">
-        <?= var_dump($_SESSION) ?>
         <p>Bienvenue <?= $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?> </p>
     </div>
 

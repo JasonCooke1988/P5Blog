@@ -18,7 +18,7 @@ class User extends Entity
 
     public function passwordVerify(string $postPassword)
     {
-       return password_verify($this->password, PASSWORD_DEFAULT) != $postPassword;
+       return password_verify($postPassword, $this->password);
     }
 
 }

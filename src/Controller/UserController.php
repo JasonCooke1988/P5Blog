@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Core\Container;
 use App\Core\Page;
 use App\Core\Response;
-use App\Manager\AccountManager;
 use App\Manager\UserManager;
 use App\Model\User;
 use App\Service\Session;
@@ -34,11 +33,10 @@ class UserController extends AbstractController
 
             } else {
                 $container = Container::getInstance();
-                $accountManager = $container->get(UserManager::class);
-                if ($accountManager->exists($data['email'])) {
+                $userManager = $container->get(UserManager::class);
+                if ($userManager->exists($data['email'])) {
                     $page = (new Page('login', ['createError' => 'Cet adresse e-mail est déjà associé à un compte']))->generateContent();
                 } else {
-                    $userManager = $container->get(UserManager::class);
                     $userManager->create($data);
                     $page = (new Page('login', ['createSuccess' => 'Félicitations votre compte à été créer.']))->generateContent();
                 }
@@ -78,7 +76,7 @@ class UserController extends AbstractController
                         $session->setAttributes($user);
                         $page = (new Page('user-page',['user' => $user]))->generateContent();
 
-                        if ($userManager->isAdmin($data['email'])) {
+                        if ($userManager->isAdmin($data['email']) === 1) {
                             $session->setAdmin();
                         }
 
