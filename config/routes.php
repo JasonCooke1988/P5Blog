@@ -20,5 +20,7 @@ return [
     new Route('/modify-post/([0-9]+)', AdminController::class, 'modifyPost'),
     new Route('/validate-comment', AdminController::class, 'validateComment'),
     new Route('/validate-comment/([0-9]+)/([0-9]+)', AdminController::class, 'validateComment'),
+    new Route('/user-list', AdminController::class, 'userList'),
+    new Route('/user-list/([0-9]+)', AdminController::class, 'setUserAdmin'),
     new Route('/create-comment', HomeController::class, 'createComment'),
 ];

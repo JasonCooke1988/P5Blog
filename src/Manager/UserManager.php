@@ -64,12 +64,12 @@ class UserManager extends Manager
         return $roles['roles'];
     }
 
-    public function setAdmin($email)
+    public function setAdmin($id)
     {
-        $sql = "UPDATE user SET roles = 1 WHERE email = :email";
+        $sql = "UPDATE user SET roles = 1, createdAt = now() WHERE id = :id";
 
         $query = $this->pdo->prepare($sql);
-        $query->bindValue(':email',$email);
+        $query->bindValue(':id',$id);
         $query->execute();
     }
 

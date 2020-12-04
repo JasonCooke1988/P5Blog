@@ -16,6 +16,7 @@ use App\Helper\Template; ?>
                 <ul>
                     <li><a href="<?= Template::getBasePath() ?>/create-post">Rédiger un blog post</a></li>
                     <li><a href="<?= Template::getBasePath() ?>/modify-post">Gérer blog posts / commentaires</a></li>
+                    <li><a href="<?= Template::getBasePath() ?>/user-list">Liste des utilisateurs</a></li>
                 </ul>
             </div>
 

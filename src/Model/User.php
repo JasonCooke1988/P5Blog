@@ -15,10 +15,32 @@ class User extends Entity
 
     protected string $password;
 
+    protected int $roles;
 
-    public function passwordVerify(string $postPassword)
+
+    /**
+     * @param string $postPassword
+     * @return bool
+     */
+    public function passwordVerify(string $postPassword): bool
     {
        return password_verify($postPassword, $this->password);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRoleAdmin(): bool
+    {
+        return $this->roles === 1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
     }
 
 }
