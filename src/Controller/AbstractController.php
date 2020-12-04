@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\CleanInput;
 use App\Core\Container;
+use App\Core\Page;
 use App\Core\Request;
 use App\Core\Response;
 
@@ -54,7 +55,7 @@ abstract class AbstractController
         die();
     }
 
-    public function checkPost()
+    public function checkPost(): array
     {
         $data = [];
         $data['formError'] = null;
@@ -88,11 +89,17 @@ abstract class AbstractController
         return $data;
     }
 
-    public function cleanPost($data)
+    public function cleanPost($data): string
     {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
+    }
+
+    public function unAuthorized(): Response
+    {
+        $page = (new Page('unauthorized'))->generateContent();
+        return new Response($page);
     }
 }

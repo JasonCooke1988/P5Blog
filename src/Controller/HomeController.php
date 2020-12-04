@@ -28,17 +28,18 @@ class HomeController extends AbstractController
         return new Response($page);
     }
 
-    public function singlePost(string $id, string $formSuccess = ""): Response
+    public function singlePost(string $postId, string $formSuccess = ""): Response
     {
 
         $container = Container::getInstance();
         $postManager = $container->get(PostManager::class);
         $commentManager = $container->get(CommentManager::class);
+        $session = $container->get(Session::class);
 
-        $comments = $commentManager->getAll($id);
-        $post = $postManager->getOne($id,$comments);
+        $comments = $commentManager->getValidated($postId);
+        $post = $postManager->getOne($postId,$comments);
 
-        $page = (new Page('post', ['formSuccess' => $formSuccess,'post' => $post]))->generateContent();
+        $page = (new Page('post', ['formSuccess' => $formSuccess, 'post' => $post, 'session' => $session]))->generateContent();
 
         return new Response($page);
     }
@@ -98,20 +99,22 @@ class HomeController extends AbstractController
 
             $data = $this->checkPost();
 
+            $container = Container::getInstance();
+            $session = $container->get(Session::class);
+
+
             if ($data['formError'] !== null) {
-                $page = (new Page('post', ['formError' => $data['formError']]))->generateContent();
+                $page = (new Page('post', ['formError' => $data['formError'], 'session' => $session ]))->generateContent();
                 return new Response($page);
 
             } else {
-                $container = Container::getInstance();
                 $commentManager = $container->get(CommentManager::class);
                 $postManager = $container->get(PostManager::class);
-                $session = $container->get(Session::class);
 
                 $data['userId'] = $session->getAttribute('id');
                 $commentManager->create($data);
 
-                return $this->singlePost($_POST['postId'],"Votre commentaire viens d'etre soumis et sera traité par un administrateur");
+                return $this->singlePost($_POST['postId'],"Votre commentaire viens d'être soumis et sera traité par un administrateur");
             }
         }
     }
