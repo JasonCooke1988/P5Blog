@@ -1,6 +1,7 @@
 <?php
 require_once('head.php');
-?>
+
+use App\Helper\Template; ?>
 
 <!-- Main Content -->
 <div id="admin-page" class="container">
@@ -13,7 +14,8 @@ require_once('head.php');
 
             <div class="admin-links">
                 <ul>
-                    <li><a href="create-post">Rédiger un blog post</a></li>
+                    <li><a href="<?= Template::getBasePath() ?>/create-post">Rédiger un blog post</a></li>
+                    <li><a href="<?= Template::getBasePath() ?>/modify-post">Gérer blog posts / commentaires</a></li>
                 </ul>
             </div>
 

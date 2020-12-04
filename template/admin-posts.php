@@ -1,5 +1,6 @@
 <?php
 
+use App\Helper\Template;
 use App\Model\Post;
 
 /**
@@ -12,12 +13,22 @@ require_once('head.php');
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+            <?php if (isset($error)): ?>
+                <div class="form-error">
+                    <p id="form-error" class="error-message"><?= $error ?></p>
+                </div>
+            <?php endif ?>
+            <?php if (isset($success)): ?>
+                <div class="form-success">
+                    <p id="form-success" class="success-message"><?= $success ?></p>
+                </div>
+            <?php endif ?>
+            <p>Cliquez sur un post pour accéder à la page permettant de le modifier et de valider les commentaires.</p>
             <?php
             foreach ($posts as $post):
                 ?>
-
                 <div class="post-preview">
-                    <a href="post/<?= $post->getId() ?>">
+                    <a href="<?= Template::getBasePath() ?>/modify-post/<?= $post->getId() ?>">
                         <h2 class="post-title">
                             <?= $post->getTitle(); ?>
                         </h2>
@@ -26,12 +37,11 @@ require_once('head.php');
                         </h3>
                     </a>
                     <p class="post-meta">Posté par
-                        <a href="#"><?= $post->getFullName() ?></a>
+                        <p><?= $post->getFullName() ?></p>
                         le <?= $post->getCreatedAt() ?></p>
                 </div>
                 <p><?= $post->getHeader() ?></p>
                 <hr>
-
             <?php endforeach; ?>
         </div>
     </div>

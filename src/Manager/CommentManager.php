@@ -11,13 +11,38 @@ class CommentManager extends Manager
 
     public function getAll(int $postId)
     {
-        //$sql = "SELECT u.id FROM user u WHERE post.Id = :postId";
-        //$query = $this->pdo->prepare($sql);
-        //$query->bindValue(':postId', $postId);
-        //$query->execute();
-        //$userId = $query->fetch();
-        $sql = "SELECT c.content, c.createdAt, u.firstName, u.lastName
+        $sql = "SELECT c.id, c.content, c.createdAt, u.firstName, u.lastName
 FROM  comment c, user u LEFT JOIN post p ON p.id = :postId WHERE c.postId = :postId2 AND u.id = p.userId";
+
+        $query = $this->pdo->prepare($sql);
+        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Comment::class);
+        $query->bindValue(':postId', $postId);
+        $query->bindValue(':postId2', $postId);
+
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
+    public function getNonValidated(int $postId)
+    {
+        $sql = "SELECT c.id, c.content, c.createdAt, u.firstName, u.lastName
+FROM  comment c, user u LEFT JOIN post p ON p.id = :postId WHERE c.postId = :postId2 AND u.id = p.userId AND c.validated = 0";
+
+        $query = $this->pdo->prepare($sql);
+        $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Comment::class);
+        $query->bindValue(':postId', $postId);
+        $query->bindValue(':postId2', $postId);
+
+        $query->execute();
+
+        return $query->fetchAll();
+    }
+
+    public function getValidated(int $postId)
+    {
+        $sql = "SELECT c.id, c.content, c.createdAt, u.firstName, u.lastName
+FROM  comment c, user u LEFT JOIN post p ON p.id = :postId WHERE c.postId = :postId2 AND u.id = p.userId AND c.validated = 1";
 
         $query = $this->pdo->prepare($sql);
         $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Comment::class);
@@ -39,4 +64,19 @@ FROM  comment c, user u LEFT JOIN post p ON p.id = :postId WHERE c.postId = :pos
         $query->execute();
     }
 
+    public function validate(int $id)
+    {
+        $sql = "UPDATE comment SET validated = 1, updatedAt = now() WHERE id = :id";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':id', $id);
+        $query->execute();
+    }
+
+    public function delete(int $id)
+    {
+        $sql = "DELETE FROM comment WHERE id = :id";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':id', $id);
+        $query->execute();
+    }
 }

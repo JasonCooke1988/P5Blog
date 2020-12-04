@@ -4,7 +4,6 @@
 namespace App\Manager;
 
 
-use App\Core\Container;
 use App\Model\Post;
 
 class PostManager extends Manager
@@ -57,6 +56,27 @@ FROM post p
         $query->bindValue(':header', $data['header']);
         $query->bindValue(':userId', $data['userId']);
 
+        $query->execute();
+    }
+
+    public function modify(array $data)
+    {
+        $sql = "UPDATE post SET title = :title, content = :content, header = :header, updatedAt = now() WHERE id = :postId;";
+
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':title', $data['title']);
+        $query->bindValue(':content', $data['content']);
+        $query->bindValue(':header', $data['header']);
+        $query->bindValue(':postId', $data['postId']);
+
+        $query->execute();
+    }
+
+    public function delete(int $id)
+    {
+        $sql = "DELETE FROM post WHERE id = :id";
+        $query = $this->pdo->prepare($sql);
+        $query->bindValue(':id', $id);
         $query->execute();
     }
 }

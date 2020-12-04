@@ -55,7 +55,7 @@ class Kernel
                 $controllerName = $route->getController();
                 $controller = new $controllerName($request);
                 $action = $route->getAction();
-                $response = call_user_func_array([$controller, $action], $varsValues);
+                $response = call_user_func_array([$controller, $action], (array)$varsValues);
                 break;
             }
         }
