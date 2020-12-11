@@ -23,12 +23,12 @@ require_once('head.php');
         </div>
 
         <?php if (isset($formError)): ?>
-            <div class="form-error">
+            <div class="form-error alert-danger">
                 <p id="form-error" class="error-message"><?= $formError ?></p>
             </div>
         <?php endif ?>
         <?php if (isset($formSuccess)): ?>
-            <div class="form-success">
+            <div class="form-success alert-success">
                 <p id="form-success" class="success-message"><?= $formSuccess ?></p>
             </div>
         <?php endif ?>
