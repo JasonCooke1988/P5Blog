@@ -22,8 +22,17 @@ class HomeController extends AbstractController
     {
         $container = Container::getInstance();
 
+        $css = "<style>
+            .masthead {
+                height: auto!important;
+            }
 
-        $page = (new Page('index'))->generateContent();
+            .logo {
+                display: initial!important;
+            }
+        </style>";
+
+        $page = (new Page('index', ['css'=> $css]))->generateContent();
 
         return new Response($page);
     }

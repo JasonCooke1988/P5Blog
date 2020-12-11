@@ -83,3 +83,13 @@ header.masthead {
     }
   }
 }
+
+body:not(#home) {
+  .masthead {
+    height: 150px;
+    overflow-y: hidden;
+    .logo {
+      display: none;
+    }
+  }
+}
