@@ -6,18 +6,18 @@ require_once('head.php');
 <div id="create-post" class="container">
 
     <div>
-        <p class="form-intro">Utilisez ce formulaire pour créer un blog post : </p>
+        <p class="form-intro d-flex justify-content-center">Utilisez ce formulaire pour créer un blog post : </p>
     </div>
 
     <div class="row form-wrapper">
 
-        <div class="col-lg-8 col-md-10 form">
-            <form action="create-post" id="create-post" method="post">
+        <div class="offset-lg-2 col-lg-8 col-md-10 form">
+            <form class="d-flex flex-column" action="create-post" id="create-post" method="post">
                 <label for="title">Le titre du post :</label>
                 <input type="title" id="title" name="title">
                 <label for="header">Le chapô du post :</label>
                 <input type="header" id="header" name="header">
-                <textarea name="content" id="content" placeholder="Rédiger un blog post..."></textarea>
+                <textarea name="content" id="content" placeholder="Rédiger un blog post..." rows="5"></textarea>
                 <input type="submit" value="Envoi">
             </form>
         </div>

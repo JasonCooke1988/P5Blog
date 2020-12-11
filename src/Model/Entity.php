@@ -32,7 +32,7 @@ abstract class Entity
     public function getCreatedAt(): string
     {
         setlocale(LC_TIME, "fr_FR",'French');
-        return ucfirst(strftime("%A %d %B %G", strtotime($this->createdAt)));
+        return utf8_encode(ucfirst(strftime("%A %d %B %G", strtotime($this->createdAt))));
     }
 
     /**

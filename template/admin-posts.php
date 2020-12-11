@@ -14,12 +14,12 @@ require_once('head.php');
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
             <?php if (isset($error)): ?>
-                <div class="form-error">
+                <div class="form-error alert-danger">
                     <p id="form-error" class="error-message"><?= $error ?></p>
                 </div>
             <?php endif ?>
             <?php if (isset($success)): ?>
-                <div class="form-success">
+                <div class="form-success alert-success">
                     <p id="form-success" class="success-message"><?= $success ?></p>
                 </div>
             <?php endif ?>

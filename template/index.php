@@ -7,8 +7,11 @@ use App\Model\Post;
  * @var Post[] $posts
  */
 require_once('head.php');
-?>
 
+if (isset($css)){
+    echo $css;
+}
+?>
 <!-- Main Content -->
 <div id="home" class="container">
     <div class="row">

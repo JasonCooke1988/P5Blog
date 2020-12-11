@@ -1,7 +1,6 @@
 <?php
 
 use App\Core\Container;
-use App\Manager\AccountManager;
 use App\Manager\CommentManager;
 use App\Manager\PostManager;
 use App\Manager\UserManager;
@@ -16,11 +15,9 @@ return [
             return new CommentManager($container->get(PDOFactory::class));
         }, UserManager::class => function (Container $container)  {
             return new UserManager($container->get(PDOFactory::class));
-        }, AccountManager::class => function (Container $container) {
-            return new AccountManager($container->get(PDOFactory::class));
         }, PDOFactory::class => function (Container $container) use ($config) {
             return new PDOFactory($config);
-        }, Session::class => function (Container $containter) {
+        }, Session::class => function (Container $container) {
             return new Session();
         }
     ] + $config;

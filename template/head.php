@@ -11,7 +11,7 @@ $url = $container->get('base.path');
 
 <head>
 
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -42,7 +42,6 @@ $url = $container->get('base.path');
 </head>
 <body>
 
-
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
@@ -56,7 +55,7 @@ $url = $container->get('base.path');
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= Template::getBasePath() ?>/index.php">Home</a>
+                    <a class="navpdo-link" href="<?= Template::getBasePath() ?>/index.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= Template::getBasePath() ?>/post-archive">Le Blog</a>

@@ -271,6 +271,15 @@ header.masthead .post-heading .meta a {
   }
 }
 
+body:not(#home) .masthead {
+  height: 150px;
+  overflow-y: hidden;
+}
+
+body:not(#home) .masthead .logo {
+  display: none;
+}
+
 .post-preview > a {
   color: #212529;
 }
