@@ -6,12 +6,12 @@ P5 Blog is a blog for showcasing my journey as a developer. It is the fifth proj
 
 Clone the repository.
 
-Use the package manager [composer](https://getcomposer.org/download/) to install foobar.
+Use the package manager [composer](https://getcomposer.org/download/) to install the projects dependencies.
 
 ```bash
 composer install
 ```
-Once installed change the value for 'base.path' in config/config.php with your local access path. 
+Once installed change the value for 'base.path' (initially http://www.p5blog.com) in config/config.php with your local access path with the public folder on the end (ex: http://localhost/p5blog/public). 
 
 Create a database with the name 'p5blog' and import the SQL dump file 'p5blog.sql' found in the root directory.
 
