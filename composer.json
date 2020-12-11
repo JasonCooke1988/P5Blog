@@ -4,6 +4,6 @@
   },
   "require": {
     "ext-pdo": "*",
-    "ext-mysql": "*"
+    "ext-mysqli": "*"
   }
 }
