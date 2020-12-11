@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 use App\Core\Container;
 use App\Core\Request;
