@@ -22,13 +22,19 @@ abstract class AbstractController
      * @var Request
      */
     protected Request $request;
+    /**
+     * @var Container
+     */
+    protected Container $container;
 
     /**
      * AbstractController constructor.
      * @param Request $request
      */
     public function __construct(Request $request)
+
     {
+        $this->container = Container::getInstance();
         $this->request = $request;
     }
 
@@ -49,37 +55,44 @@ abstract class AbstractController
 
     public function redirect($page)
     {
-        $container = Container::getInstance();
-        $url = $container->get('base.path');
+        $url = $this->container->get('base.path');
         header('Location: ' . $url . $page);
-        die();
     }
 
     public function checkPost(): array
     {
         $data = [];
         $data['formError'] = null;
+        $post = $this->request->getpost();
 
-        foreach ($_POST as $key => $val) {
-            if (empty($_POST[$key])) {
-                if ($key === "email") {
-                    $data['formError'] = $this->emailError;
-                } elseif ($key === "fname") {
-                    $data['formError'] = $this->fnameError;
-                } elseif ($key === "lname") {
-                    $data['formError'] = $this->lnameError;
-                } elseif ($key === "password" || $key === "password2") {
-                    $data['formError'] = $this->passError;
-                } elseif ($key === "message") {
-                    $formError = $this->messageError;
-                }
-            } else {
-                if ($key !== "password" && $key !== "password2") {
-                    $data[$key] = $this->cleanPost($_POST[$key]);
-                } else {
-                    $data[$key] = $_POST[$key];
+        foreach ($post as $key => $val) {
+            if (empty($post[$key])) {
+                switch ($key) {
+                    case 'email':
+                        $data['formError'] = $this->emailError;
+                        break;
+                    case 'fname':
+                        $data['formError'] = $this->fnameError;
+                        break;
+                    case 'lname':
+                        $data['formError'] = $this->lnameError;
+                        break;
+                    case 'password':
+                    case 'password2':
+                        $data['formError'] = $this->passError;
+                        break;
+                    case 'message':
+                        $data['formError'] = $this->messageError;
+                        break;
                 }
             }
+
+            if ($key !== "password" && $key !== "password2") {
+                $data[$key] = $this->cleanPost($post[$key]);
+            } else {
+                $data[$key] = $post[$key];
+            }
+
         }
 
         if (isset($data['password']) && isset($data['password2']) && $data['password'] !== $data['password2']) {
@@ -92,7 +105,7 @@ abstract class AbstractController
     public function cleanPost($data): string
     {
         $data = trim($data);
-        $data = stripslashes($data);
+        $data = addslashes($data);
         $data = htmlspecialchars($data);
         return $data;
     }

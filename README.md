@@ -3,8 +3,7 @@
 P5 Blog is a blog for showcasing my journey as a developer. It is the fifth project in my PHP / Symfony developper course with OpenClassrooms.
 
 ## Installation
-
-Clone the repository.
+Clone the repository.  
 
 Use the package manager [composer](https://getcomposer.org/download/) to install the projects dependencies.
 
@@ -26,23 +25,27 @@ Pass : test
 
 ## Structure
 
-1. config
-2. public  
+1. config  
+
+2. public   
 ⋅⋅1. css  
-⋅⋅2. gulp  
-⋅⋅3. img  
-⋅⋅4. js
-3. scss
-4. src  
+⋅⋅2. gulp   
+⋅⋅3. img   
+⋅⋅4. js  
+
+3. scss  
+4. src   
 ⋅⋅1. Controller  
 ⋅⋅2. Core  
 ⋅⋅3. Helper  
 ⋅⋅4. Manager  
 ⋅⋅5. Model  
 ⋅⋅6. Service  
-5. template  
+
+5. template   
 ⋅⋅1. mail
-6. vendor  
+
+6. vendor   
 ⋅⋅1. composer
 
 ## License

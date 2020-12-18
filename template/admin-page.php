@@ -1,5 +1,5 @@
 <?php
-require_once('head.php');
+include 'head.php';
 
 use App\Helper\Template; ?>
 
@@ -7,7 +7,7 @@ use App\Helper\Template; ?>
 <div id="admin-page" class="container">
 
         <div class="row">
-            <p>Bienvenue <?= $_SESSION['firstName'] . ' ' . $_SESSION['lastName'] ?> tu est un admin</p>
+            <p>Bienvenue <?= $session->getFullName() ?> tu est un admin</p>
         </div>
 
         <div class="row">
@@ -25,4 +25,4 @@ use App\Helper\Template; ?>
 </div>
 
 <hr>
-<?php require_once('footer.php'); ?>
+<?php include 'footer.php'; ?>

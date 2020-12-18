@@ -24,15 +24,38 @@ class Post extends Entity
      */
     private array $comments;
 
-    /**
-     * @var string
-     */
-    private string $firstName;
 
     /**
-     * @var string
+     * @param array $comments
      */
-    private string $lastName;
+    public function setComments(array $comments): void
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $this->cleanData($title);
+    }
+
+    /**
+     * @param string $content
+     */
+    public function setContent(string $content): void
+    {
+        $this->content = $this->cleanData($content);
+    }
+
+    /**
+     * @param string $header
+     */
+    public function setHeader(string $header): void
+    {
+        $this->header = $this->cleanData($header);
+    }
 
 
     /**
@@ -43,6 +66,7 @@ class Post extends Entity
         return $this->title;
     }
 
+
     /**
      * @return string
      */
@@ -50,7 +74,6 @@ class Post extends Entity
     {
         return $this->content;
     }
-
 
     /**
      * @return string
@@ -62,14 +85,6 @@ class Post extends Entity
 
 
     /**
-     * @param array $comments
-     */
-    public function setComments(array $comments): void
-    {
-        $this->comments = $comments;
-    }
-
-    /**
      * @return array
      */
     public function getComments(): array
@@ -77,11 +92,4 @@ class Post extends Entity
         return $this->comments;
     }
 
-    /**
-     * @return string
-     */
-    public function getFullName(): string
-    {
-        return $this->firstName . ' ' . $this->lastName;
-    }
 }

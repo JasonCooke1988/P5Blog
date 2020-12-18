@@ -9,40 +9,16 @@ class Comment extends Entity
     /**
      * @var string
      */
-    private string $post;
-
-    /**
-     * @var string
-     */
     private string $content;
 
-    /**
-     * @var string
-     */
-    private string $firstName;
 
     /**
-     * @var string
+     * @param string $content
      */
-    private string $lastName;
-
-
-    /**
-     * @return int
-     */
-    public function getId(): int
+    public function setContent(string $content): void
     {
-        return $this->id;
+        $this->content = $this->cleanData($content);
     }
-
-    /**
-     * @return string
-     */
-    public function getPost(): string
-    {
-        return $this->post;
-    }
-
 
     /**
      * @return string
@@ -53,12 +29,6 @@ class Comment extends Entity
     }
 
 
-    /**
-     * @return string
-     */
-    public function getFullName(): string
-    {
-        return $this->firstName . ' ' . $this->lastName;
-    }
+
 
 }

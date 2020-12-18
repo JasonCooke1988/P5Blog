@@ -17,6 +17,10 @@ class Kernel
      * @var array
      */
     private $routes = [];
+    /**
+     * @var Container
+     */
+    private $container;
 
     /**
      * Kernel constructor.
@@ -26,6 +30,7 @@ class Kernel
     public function __construct(array $routes)
     {
         $this->routes = $routes;
+        $this->container = Container::getInstance();
     }
 
     /**
@@ -41,9 +46,8 @@ class Kernel
         $response = null;
         $uri = $request->getUri();
 
-        $container = Container::getInstance();
-        if ($container->has('base.path')) {
-            $basePath = parse_url($container->get('base.path'), PHP_URL_PATH);
+        if ($this->container->has('base.path')) {
+            $basePath = parse_url($this->container->get('base.path'), PHP_URL_PATH);
             $uri = str_replace($basePath, '',$uri);
         }
 

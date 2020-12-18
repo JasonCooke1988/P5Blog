@@ -25,16 +25,16 @@ FROM post p
         return $posts;
     }
 
-    public function getOne(int $postId, array $comments): Post
+    public function getOne(int $postid, array $comments): Post
     {
         $sql = "SELECT p.id, p.title, p.content, p.createdAt, p.updatedAt, p.header, u.firstName, u.lastName
                 FROM post p
                 LEFT JOIN user u ON p.userId = u.id
-                WHERE p.id = :id";
+                WHERE p.id = :postid";
 
         $query = $this->pdo->prepare($sql);
         $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Post::class);
-        $query->bindValue(':id', $postId);
+        $query->bindValue(':postid', $postid);
 
         $query->execute();
         $post = $query->fetch();
@@ -72,11 +72,11 @@ FROM post p
         $query->execute();
     }
 
-    public function delete(int $id)
+    public function delete(int $postid)
     {
-        $sql = "DELETE FROM post WHERE id = :id";
+        $sql = "DELETE FROM post WHERE id = :postid";
         $query = $this->pdo->prepare($sql);
-        $query->bindValue(':id', $id);
+        $query->bindValue(':postid', $postid);
         $query->execute();
     }
 }

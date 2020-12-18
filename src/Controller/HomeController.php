@@ -20,8 +20,6 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        $container = Container::getInstance();
-
         $css = "<style>
             .masthead {
                 height: auto!important;
@@ -32,7 +30,7 @@ class HomeController extends AbstractController
             }
         </style>";
 
-        $page = (new Page('index', ['css'=> $css]))->generateContent();
+        $page = (new Page('index', ['css' => $css]))->generateContent();
 
         return new Response($page);
     }
@@ -40,13 +38,12 @@ class HomeController extends AbstractController
     public function singlePost(string $postId, string $formSuccess = ""): Response
     {
 
-        $container = Container::getInstance();
-        $postManager = $container->get(PostManager::class);
-        $commentManager = $container->get(CommentManager::class);
-        $session = $container->get(Session::class);
+        $postManager = $this->container->get(PostManager::class);
+        $commentManager = $this->container->get(CommentManager::class);
+        $session = $this->container->get(Session::class);
 
         $comments = $commentManager->getValidated($postId);
-        $post = $postManager->getOne($postId,$comments);
+        $post = $postManager->getOne($postId, $comments);
 
         $page = (new Page('post', ['formSuccess' => $formSuccess, 'post' => $post, 'session' => $session]))->generateContent();
 
@@ -55,9 +52,8 @@ class HomeController extends AbstractController
 
     public function allPost(): Response
     {
-        $container = Container::getInstance();
 
-        $postManager = $container->get(PostManager::class);
+        $postManager = $this->container->get(PostManager::class);
 
         $posts = $postManager->getList();
 
@@ -74,30 +70,32 @@ class HomeController extends AbstractController
 
             if ($data['formError'] !== null) {
                 $page = (new Page('index', ['formError' => $data['formError']]))->generateContent();
+                return new Response($page);
 
-            } else {
-                $to = "jason.cooke@hotmail.fr";
-                $subject = "Message de contact depuis P5 blog";
-
-                $message = "<b>Message recue du formulaire de contact sur P5 Blog</b>";
-                $message .= "Auteur du message : " . $data['fname'] . " " . $data['lname'];
-                $message .= $data['message'];
-
-                $header = "From:".$data['email']." \r\n";
-
-                $retval = mail ($to,$subject,$message,$header);
-
-
-                if( $retval == true ) {
-                    $data['formSuccess'] = "Message sent successfully...";
-                    $page = (new Page('index', ['formSuccess' => $data['formSuccess']]))->generateContent();
-                }else {
-                    $data['formError'] =  "Message could not be sent...";
-                    $page = (new Page('index', ['formError' => $data['formError']]))->generateContent();
-                }
             }
 
+            $to = "jason.cooke@hotmail.fr";
+            $subject = "Message de contact depuis P5 blog";
+
+            $message = "<b>Message recue du formulaire de contact sur P5 Blog</b>";
+            $message .= "Auteur du message : " . $data['fname'] . " " . $data['lname'];
+            $message .= $data['message'];
+
+            $header = "From:" . $data['email'] . " \r\n";
+
+            $retval = mail($to, $subject, $message, $header);
+
+
+            if ($retval == true) {
+                $data['formSuccess'] = "Message sent successfully...";
+                $page = (new Page('index', ['formSuccess' => $data['formSuccess']]))->generateContent();
+                return new Response($page);
+            }
+
+            $data['formError'] = "Message could not be sent...";
+            $page = (new Page('index', ['formError' => $data['formError']]))->generateContent();
             return new Response($page);
+
         }
 
     }
@@ -108,23 +106,24 @@ class HomeController extends AbstractController
 
             $data = $this->checkPost();
 
-            $container = Container::getInstance();
-            $session = $container->get(Session::class);
+            $post = $this->request->getPost();
+
+            $session = $this->container->get(Session::class);
 
 
             if ($data['formError'] !== null) {
-                $page = (new Page('post', ['formError' => $data['formError'], 'session' => $session ]))->generateContent();
+                $page = (new Page('post', ['formError' => $data['formError'], 'session' => $session]))->generateContent();
                 return new Response($page);
 
-            } else {
-                $commentManager = $container->get(CommentManager::class);
-                $postManager = $container->get(PostManager::class);
+            }
+                $commentManager = $this->container->get(CommentManager::class);
 
                 $data['userId'] = $session->getAttribute('id');
+
                 $commentManager->create($data);
 
-                return $this->singlePost($_POST['postId'],"Votre commentaire viens d'être soumis et sera traité par un administrateur");
-            }
+                return $this->singlePost($post['postId'], "Votre commentaire viens d'être soumis et sera traité par un administrateur");
+
         }
     }
 

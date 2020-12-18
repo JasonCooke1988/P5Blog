@@ -17,7 +17,10 @@ class Request
         $this->uri = $_SERVER['REQUEST_URI'];
         $this->post = $_POST;
         $this->get = $_GET;
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = null;
+        if (isset($_SERVER['REQUEST_METHOD'])) {
+            $this->method = $_SERVER['REQUEST_METHOD'];
+        }
     }
 
     /**

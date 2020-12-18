@@ -6,11 +6,6 @@ namespace App\Model;
 
 class User extends Entity
 {
-
-    protected string $firstName;
-
-    protected string $lastName;
-
     protected string $email;
 
     protected string $password;
@@ -38,9 +33,49 @@ class User extends Entity
     /**
      * @return string
      */
-    public function getFullName(): string
+    public function getEmail(): string
     {
-        return $this->firstName . ' ' . $this->lastName;
+        return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRoles(): int
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $this->cleanData($email);
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $this->cleanData($password);
+    }
+
+    /**
+     * @param int $roles
+     */
+    public function setRoles(int $roles): void
+    {
+        $this->roles = $this->cleanData($roles);
     }
 
 }

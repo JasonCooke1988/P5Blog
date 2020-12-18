@@ -24,7 +24,7 @@ class Template
             $basePath = $container->get('base.path');;
         }
 
-        return $basePath;
+        return htmlspecialchars($basePath);
     }
 
 }

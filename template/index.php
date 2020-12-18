@@ -6,7 +6,7 @@ use App\Model\Post;
 /**
  * @var Post[] $posts
  */
-require_once('head.php');
+include 'head.php';
 
 if (isset($css)){
     echo $css;
@@ -58,4 +58,4 @@ if (isset($css)){
 </div>
 
 <hr>
-<?php require_once('footer.php'); ?>
+<?php include 'footer.php'; ?>
