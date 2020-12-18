@@ -16,14 +16,15 @@ class Page
      * @var array
      */
     private array $vars = [];
-    /**
-     * @var Post
-     */
-    private Post $posts;
+
     /**
      * @var string
      */
     private string $dir;
+    /**
+     * @var Container
+     */
+    private Container $container;
 
     /**
      * Page constructor.
@@ -36,8 +37,8 @@ class Page
 
         $this->pageName = $pageName;
         $this->vars = $vars;
-        $container = Container::getInstance();
-        $this->dir = $container->get('dir');
+        $this->container = Container::getInstance();
+        $this->dir = $this->container->get('dir');
     }
 
     /**
@@ -45,10 +46,17 @@ class Page
      */
     public function generateContent(): string
     {
+
+        foreach($this->vars as $key){
+            if (is_string($key)) {
+                $this->vars[$key] = htmlspecialchars($key);
+            }
+        }
+
         extract($this->vars);
 
         ob_start();
-        require_once ($this->dir.'/template/'.$this->pageName.'.php');
+        include $this->dir.'/template/'.$this->pageName.'.php';
         return ob_get_clean();
 
     }

@@ -7,7 +7,7 @@ use App\Manager\UserManager;
 use App\Service\PDOFactory;
 use App\Service\Session;
 
-$config = require 'config.php';
+$config = include 'config.php';
 return [
         PostManager::class => function (Container $container) {
             return new PostManager($container->get(PDOFactory::class));

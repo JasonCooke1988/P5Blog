@@ -64,19 +64,19 @@ FROM  comment c, user u LEFT JOIN post p ON p.id = :postId WHERE c.postId = :pos
         $query->execute();
     }
 
-    public function validate(int $id)
+    public function validate(int $commentid)
     {
-        $sql = "UPDATE comment SET validated = 1, updatedAt = now() WHERE id = :id";
+        $sql = "UPDATE comment SET validated = 1, updatedAt = now() WHERE id = :commentid";
         $query = $this->pdo->prepare($sql);
-        $query->bindValue(':id', $id);
+        $query->bindValue(':commentid', $commentid);
         $query->execute();
     }
 
-    public function delete(int $id)
+    public function delete(int $commentid)
     {
-        $sql = "DELETE FROM comment WHERE id = :id";
+        $sql = "DELETE FROM comment WHERE id = :commentid";
         $query = $this->pdo->prepare($sql);
-        $query->bindValue(':id', $id);
+        $query->bindValue(':commentid', $commentid);
         $query->execute();
     }
 }

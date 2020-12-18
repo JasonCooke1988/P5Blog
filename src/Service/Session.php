@@ -6,10 +6,8 @@ namespace App\Service;
 
 use App\Model\User;
 
-class Session extends User
+class Session
 {
-
-    private User $user;
 
     public function __construct()
     {
@@ -20,8 +18,10 @@ class Session extends User
 
     public function setAttributes(User $user)
     {
-        foreach($user as $key => $val) {
-            $_SESSION[$key] = $val;
+        $array = $user->iterate();
+        foreach($array as $key => $val) {
+            $get = 'get'.$key;
+            $_SESSION[$key] = $user->$get();
         }
         $this->setAuthenticated();
     }
@@ -41,11 +41,6 @@ class Session extends User
         $_SESSION['admin'] = $auth;
     }
 
-    public function setUser(User $user)
-    {
-        $this->user = $user;
-    }
-
     public function isAuth()
     {
         return isset($_SESSION['auth']);
@@ -55,5 +50,9 @@ class Session extends User
     {
         return isset($_SESSION['admin']);
     }
-    
+
+    public function getFullName()
+    {
+        return $_SESSION['firstName'] . ' ' .  $_SESSION['lastName'];
+    }
 }

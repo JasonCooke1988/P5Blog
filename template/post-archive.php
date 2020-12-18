@@ -5,7 +5,7 @@ use App\Model\Post;
 /**
  * @var Post[] $posts
  */
-require_once('head.php');
+include 'head.php';
 ?>
 
 <!-- Main Content -->

@@ -6,7 +6,7 @@ use App\Model\Post;
 /**
  * @var Post[] $posts
  */
-require_once('head.php');
+include 'head.php';
 ?>
 
 <!-- Main Content -->
@@ -48,4 +48,4 @@ require_once('head.php');
 </div>
 
 <hr>
-<?php require_once('footer.php'); ?>
+<?php include 'footer.php'; ?>

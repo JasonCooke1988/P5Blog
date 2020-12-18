@@ -32,8 +32,7 @@ class UserController extends AbstractController
                 $page = (new Page('login', ['createError' => $data['formError']]))->generateContent();
 
             } else {
-                $container = Container::getInstance();
-                $userManager = $container->get(UserManager::class);
+                $userManager = $this->container->get(UserManager::class);
                 if ($userManager->exists($data['email'])) {
                     $page = (new Page('login', ['createError' => 'Cet adresse e-mail est déjà associé à un compte']))->generateContent();
                 } else {
@@ -61,20 +60,18 @@ class UserController extends AbstractController
                 $page = (new Page('login', ['loginError' => $data['formError']]))->generateContent();
 
             } else {
-                $container = Container::getInstance();
-                $userManager = $container->get(UserManager::class);
+                $userManager = $this->container->get(UserManager::class);
                 if (!$userManager->exists($data['email'])) {
                     $page = (new Page('login', ['loginError' => 'Cet adresse e-mail n\'est pas associé à un compte']))->generateContent();
                 } else {
-                    $session = $container->get(Session::class);
+                    $session = $this->container->get(Session::class);
 
                     $user = $userManager->login($data);
 
                     if ($user instanceof User) {
-
-                        $session->setUser($user);
+                        //var_dump($user);
                         $session->setAttributes($user);
-                        $page = (new Page('user-page',['user' => $user]))->generateContent();
+                        $page = (new Page('user-page',['user' => $user, 'session' => $session]))->generateContent();
 
                         if ($userManager->isAdmin($data['email']) === 1) {
                             $session->setAdmin();

@@ -18,25 +18,23 @@ class AdminController extends AbstractController
 
     public function index(): Response
     {
-        $container = Container::getInstance();
-        $session = $container->get(Session::class);
+        $session = $this->container->get(Session::class);
         if (!$session->isAuth() || !$session->isAdmin()) {
             return $this->unAuthorized();
-        } else {
-            $page = (new Page('admin-page'))->generateContent();
         }
+
+        $page = (new Page('admin-page', ['session' => $session]))->generateContent();
         return new Response($page);
     }
 
     public function createPost(): Response
     {
-        $container = Container::getInstance();
-        $session = $container->get(Session::class);
+        $session = $this->container->get(Session::class);
         if (!$session->isAdmin()) {
             return $this->unAuthorized();
         } else {
             if ($this->request->getMethod() === "POST") {
-                $postManager = $container->get(PostManager::class);
+                $postManager = $this->container->get(PostManager::class);
                 $data = $this->checkPost();
                 $data['email'] = $session->getAttribute('email');
                 $data['userId'] = $session->getAttribute('id');
@@ -53,12 +51,11 @@ class AdminController extends AbstractController
 
     public function modifyPostList(): Response
     {
-        $container = Container::getInstance();
-        $session = $container->get(Session::class);
+        $session = $this->container->get(Session::class);
         if (!$session->isAdmin()) {
             return $this->unAuthorized();
         }
-        $postManager = $container->get(PostManager::class);
+        $postManager = $this->container->get(PostManager::class);
 
         $posts = $postManager->getList();
 
@@ -69,14 +66,13 @@ class AdminController extends AbstractController
 
     public function modifyPost(int $postId): Response
     {
-        $container = Container::getInstance();
-        $session = $container->get(Session::class);
+        $session = $this->container->get(Session::class);
         if (!$session->isAdmin()) {
             return $this->unAuthorized();
         }
 
-        $postManager = $container->get(PostManager::class);
-        $commentManager = $container->get(CommentManager::class);
+        $postManager = $this->container->get(PostManager::class);
+        $commentManager = $this->container->get(CommentManager::class);
 
         if ($this->request->getMethod() === "POST") {
             $data = $this->checkPost();
@@ -102,14 +98,13 @@ class AdminController extends AbstractController
     public function validateComment(int $commentId, int $postId): Response
     {
 
-        $container = Container::getInstance();
-        $session = $container->get(Session::class);
+        $session = $this->container->get(Session::class);
         if (!$session->isAdmin()) {
             return $this->unAuthorized();
         }
 
-        $postManager = $container->get(PostManager::class);
-        $commentManager = $container->get(CommentManager::class);
+        $postManager = $this->container->get(PostManager::class);
+        $commentManager = $this->container->get(CommentManager::class);
 
 
         if ($this->request->getMethod() === "POST") {
@@ -136,14 +131,13 @@ class AdminController extends AbstractController
 
     public function userList(): Response
     {
-        $container = Container::getInstance();
-        $session = $container->get(Session::class);
+        $session = $this->container->get(Session::class);
 
         if (!$session->isAdmin()) {
             return $this->unAuthorized();
         }
 
-        $userManager = $container->get(UserManager::class);
+        $userManager = $this->container->get(UserManager::class);
         $users = $userManager->getAll();
         $page = (new Page('user-list', ['users' => $users]))->generateContent();
 
@@ -152,14 +146,13 @@ class AdminController extends AbstractController
 
     public function setUserAdmin(int $userId)
     {
-        $container = Container::getInstance();
-        $session = $container->get(Session::class);
+        $session = $this->container->get(Session::class);
 
         if (!$session->isAdmin()) {
             return $this->unAuthorized();
         }
 
-        $userManager = $container->get(UserManager::class);
+        $userManager = $this->container->get(UserManager::class);
         $userManager->setAdmin($userId);
         $users = $userManager->getAll();
         $page = (new Page('user-list', ['users' => $users, 'success' => 'L\'utilisateur est désormais un administrateur']))->generateContent();
