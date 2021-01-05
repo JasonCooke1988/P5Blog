@@ -69,7 +69,6 @@ class UserController extends AbstractController
                     $user = $userManager->login($data);
 
                     if ($user instanceof User) {
-                        //var_dump($user);
                         $session->setAttributes($user);
                         $page = (new Page('user-page',['user' => $user, 'session' => $session]))->generateContent();
 

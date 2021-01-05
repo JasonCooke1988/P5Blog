@@ -1,5 +1,5 @@
 <?php
-include 'head.php';
+require_once 'head.php';
 
 use App\Helper\Template; ?>
 
@@ -56,4 +56,4 @@ use App\Helper\Template; ?>
 <hr>
 
 <hr>
-<?php include 'footer.php'; ?>
+<?php require_once 'footer.php'; ?>
