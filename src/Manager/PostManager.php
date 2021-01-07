@@ -13,8 +13,8 @@ class PostManager extends Manager
     {
 
         $sql = "SELECT p.id, p.title, p.content, p.createdAt, p.updatedAt, p.header, u.firstName, u.lastName
-FROM post p
-         LEFT JOIN user u ON p.userId = u.id";
+FROM post p 
+         LEFT JOIN user u ON p.userId = u.id ORDER BY p.id DESC";
 
         $query = $this->pdo->query($sql);
         $query->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, Post::class);
