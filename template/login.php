@@ -30,13 +30,13 @@ require_once 'head.php';
             </form>
 
             <?php if (isset($createError)): ?>
-                <div class="create-error">
+                <div class="alert-danger create-error">
                     <p class="error-message"><?= $createError ?></p>
                 </div>
             <?php endif; ?>
 
             <?php if (isset($createSuccess)): ?>
-                <div class="create-success">
+                <div class="alert-success create-success">
                     <p class="success-message"><?= $createSuccess ?></p>
                 </div>
             <?php endif; ?>
@@ -57,13 +57,13 @@ require_once 'head.php';
             </form>
 
             <?php if (isset($loginError)): ?>
-                <div class="login-error">
+                <div class="alert-danger login-error">
                     <p class="error-message"><?= $loginError ?></p>
                 </div>
             <?php endif; ?>
 
             <?php if (isset($loginSuccess)): ?>
-                <div class="login-success">
+                <div class="alert-success login-success">
                     <p class="success-message"><?= $loginSuccess ?></p>
                 </div>
             <?php endif; ?>

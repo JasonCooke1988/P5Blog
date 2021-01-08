@@ -44,7 +44,7 @@ use App\Helper\Template; ?>
                 <?php endif; ?>
 
                 <?php if (isset($formSuccess)): ?>
-                    <div class="login-success alert-sucess">
+                    <div class="login-success alert-success">
                         <p class="success-message"><?= $formSuccess ?></p>
                     </div>
                 <?php endif; ?>
