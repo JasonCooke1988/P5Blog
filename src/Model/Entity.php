@@ -66,7 +66,11 @@ abstract class Entity
      */
     public function getUpdatedAt()
     {
-        return $this->updatedAt;
+        if ($this->updatedAt != null) {
+            setlocale(LC_TIME, "fr_FR", 'French');
+            return utf8_encode(ucfirst(strftime("%A %d %B %G", strtotime($this->updatedAt))));
+        }
+        return null;
     }
 
     /**

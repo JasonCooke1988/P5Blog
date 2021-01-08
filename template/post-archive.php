@@ -22,14 +22,20 @@ require_once 'head.php';
                             <?= $post->getTitle(); ?>
                         </h2>
                         <h3 class="post-subtitle">
-                            <?= $post->getContent(); ?>
+                            <?= $post->getHeader() ?>
                         </h3>
                     </a>
-                    <p class="post-meta">Posté par
-                        <a href="#"><?= $post->getFullName() ?></a>
-                        le <?= $post->getCreatedAt() ?></p>
+                    <?php if ($post->getUpdatedAt() === null): ?>
+                        <p class="post-meta">Posté par
+                            <?= $post->getFullName() ?>
+                            le <?= $post->getCreatedAt() ?></p>
+                    <?php else: ?>
+                        <p class="post-meta">Posté par
+                            <?= $post->getFullName() ?> le <?= $post->getCreatedAt() ?>
+                            dernière modification le <?= $post->getUpdatedAt() ?></p>
+                    <?php endif; ?>
                 </div>
-                <p><?= $post->getHeader() ?></p>
+                <p><?= substr($post->getContent(), 0, 20); ?>...</p>
                 <hr>
 
             <?php endforeach; ?>
