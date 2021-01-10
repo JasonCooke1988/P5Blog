@@ -7,7 +7,7 @@ $container = Container::getInstance();
 $url = $container->get('base.path');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 

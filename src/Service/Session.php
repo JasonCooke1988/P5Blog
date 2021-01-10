@@ -48,7 +48,7 @@ class Session
 
     public function isAdmin()
     {
-        return isset($_SESSION['admin']);
+        return $_SESSION['admin'];
     }
 
     public function getFullName()
