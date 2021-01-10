@@ -69,12 +69,16 @@ class UserController extends AbstractController
                     $user = $userManager->login($data);
 
                     if ($user instanceof User) {
-                        $session->setAttributes($user);
-                        $page = (new Page('user-page',['user' => $user, 'session' => $session]))->generateContent();
 
                         if ($userManager->isAdmin($data['email']) === 1) {
                             $session->setAdmin();
+                        } else {
+                            $session->setAdmin(false);
                         }
+
+                        $session->setAttributes($user);
+                        $page = (new Page('user-page',['user' => $user, 'session' => $session]))->generateContent();
+
 
                     } else {
                         $page = (new Page('login', ['loginError' => 'Mot de passe invalide']))->generateContent();
